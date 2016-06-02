@@ -1,30 +1,30 @@
 use std::cell::RefCell;
 
 
-pub struct tdolist {
+pub struct Tdolist {
     table: bool,
     tick: bool,
     global_id: u32,
     categories: RefCell<Vec<category>>
 }
 
-pub struct category {
+pub struct Category {
     name: String,
     todos: RefCell<Vec<todo>>,
 }
 
-pub struct todo {
+pub struct Todo {
     id: u32,
-    todo_text: String,
+    title: String,
     done: bool,
 }
 
-impl todo {
-    pub fn new(list: tdolist, todo_text: String, category_str: String) -> Result< (), &'static str> {
-        let id = get_id();
+impl Todo {
+    pub fn new(list: Tdolist, todo_text: String, category_str: String) -> Result< (), &'static str> {
+        // Usually, new() returns the instance. Maybe This should be wrapped with an add()?
 
         let mut exists: bool = false;
-        let mut in_category: category;
+        let mut in_category: Category;
             for x in list.categories.borrow_mut().iter() {
                 if category_str.to_lowercase() == x.name.to_lowercase() {
                     let exists = true;
@@ -37,8 +37,8 @@ impl todo {
             Err("Category does not exist.")
         } else {
             let result = todo {
-                id: id,
-                todo_text: todo_text,
+                id: get_id(),
+                title: todo_text,
                 done: false,
             };
             in_category.todos.borrow_mut().push(result);

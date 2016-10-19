@@ -28,9 +28,12 @@ fn test() {
     li.list.push(tdo2);
 
     let bla = json::from(tdo1);
-    print!("{}", bla.dump());
+    println!("{}", bla.dump());
 
     let mut f = File::create("foo.json").unwrap();
 
     bla.write_pretty(&mut f, 4);
+
+    let jsonlist = json::from(li);
+    println!("{}", jsonlist.pretty(4));
 }

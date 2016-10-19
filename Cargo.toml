@@ -5,3 +5,4 @@ authors = ["Felix Wittwer <dev@felixwittwer.de>", "Felix Döring <mail@felixdoer
 
 [dependencies]
 clap = "2"
+json = "0.10"

@@ -36,4 +36,14 @@ fn test() {
 
     let jsonlist = json::from(li);
     println!("{}", jsonlist.pretty(4));
+
+    // deserialisation
+
+    let mut inpf = File::open("foo.json").unwrap();
+    let mut serialized = String::new();
+
+    inpf.read_to_string(&mut serialized);
+
+    let j = todo::Todo::from_json(&bla);
+    println!("{:?}", j);
 }

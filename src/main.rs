@@ -8,6 +8,7 @@ use std::fs::File;
 use clap::{Arg, App, SubCommand};
 mod todo;
 mod list;
+mod storage;
 
 fn main() {
     let matches = App::new("tdo")
@@ -44,6 +45,7 @@ fn test() {
 
     inpf.read_to_string(&mut serialized);
 
-    let j = todo::Todo::from_json(&bla);
-    println!("{:?}", j);
+    if let Ok(j) = todo::Todo::from_json(&bla) {
+        println!("{:?}", j);
+    }
 }

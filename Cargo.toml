@@ -4,7 +4,7 @@ version = "0.0.1"
 authors = ["Felix Wittwer <dev@felixwittwer.de>", "Felix Döring <mail@felixdoering.com>"]
 
 [dependencies]
-clap = "2"
+clap = {version = "2.19", features = ["yaml"]}
 serde = "0.9.1"
 serde_derive = "0.9.1"
 serde_json = "0.9.1"

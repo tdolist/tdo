@@ -1,26 +1,28 @@
 #![feature(custom_derive)]
-extern crate clap;
+#[macro_use] extern crate clap;
+
 #[macro_use]
 extern crate serde_derive;
 extern crate serde_json;
 
+#[allow(unused_imports)]
 
-#[allow(dead_code, unused_imports)]
-
-use std::io::prelude::*;
 use std::fs::File;
-use clap::{Arg, App, SubCommand};
+use clap::App;
 mod todo;
 mod list;
 mod storage;
 
 fn main() {
-    let matches = App::new("tdo")
-        .version("0.0.1")
-        .author("Felix Wittwer <dev@felixwittwer.de>, Felix Döring <mail@felixdoering.com>")
-        .about("A todo list tool for the terminal")
-        .subcommand(SubCommand::with_name("all").about("Lists all tasks."))
-        .get_matches();
+    let yml = load_yaml!("cli.yml");
+    let m = App::from_yaml(yml).version(crate_version!()).author(crate_authors!()).get_matches();
+    // let matches = App::new("tdo")
+    //     .version("0.0.1")
+    //     .author("Felix Wittwer <dev@felixwittwer.de>, Felix Döring <mail@felixdoering.com>")
+    //     .about("A todo list tool for the terminal")
+    //     .subcommand(SubCommand::with_name("all").about("Lists all tasks."))
+    //     .get_matches();
+    println!("{:?}", m.args);
 
     test();
 }

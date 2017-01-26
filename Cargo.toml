@@ -5,4 +5,6 @@ authors = ["Felix Wittwer <dev@felixwittwer.de>", "Felix Döring <mail@felixdoer
 
 [dependencies]
 clap = "2"
-json = "0.10"
+serde = "0.9.1"
+serde_derive = "0.9.1"
+serde_json = "0.9.1"

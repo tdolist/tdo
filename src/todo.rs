@@ -1,42 +1,45 @@
-extern crate json;
-
-use json::JsonValue;
 use storage::StorageError;
 
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Todo {
     id: u32,
     name: String,
-    done: bool
+    done: bool,
 }
 
 
-impl Into<JsonValue> for Todo {
-    fn into(self) -> JsonValue {
-        object!{
-            "id"   => self.id,
-            "name" => self.name,
-            "done" => self.done
-        }
-    }
-}
+// impl Into<JsonValue> for Todo {
+//     fn into(self) -> JsonValue {
+//         object!{
+//             "id"   => self.id,
+//             "name" => self.name,
+//             "done" => self.done
+//         }
+//     }
+// }
 
 
 impl Todo {
-    pub fn new(id: u32, name: &str) -> Todo { Todo{ id:id, name:name.to_string(), done:false } }
-
-
-    pub fn from_json(json: &JsonValue) -> Result<Todo, StorageError> {
-        //safeguards to detect if someone tampered with the JSON File
-        if !json["id"].is_number() || !json["name"].is_string() || !json["done"].is_boolean() {
-            Err(StorageError::FileCorrupted)
-        } else {
-            Ok(Todo {
-                id: json["id"].as_u32().unwrap(),
-                name: json["name"].as_str().unwrap().to_string(),
-                done: json["done"].as_bool().unwrap()
-            })
+    pub fn new(id: u32, name: &str) -> Todo {
+        Todo {
+            id: id,
+            name: name.to_string(),
+            done: false,
         }
     }
+
+
+    // pub fn from_json(json: &JsonValue) -> Result<Todo, StorageError> {
+    //     //safeguards to detect if someone tampered with the JSON File
+    //     if !json["id"].is_number() || !json["name"].is_string() || !json["done"].is_boolean() {
+    //         Err(StorageError::FileCorrupted)
+    //     } else {
+    //         Ok(Todo {
+    //             id: json["id"].as_u32().unwrap(),
+    //             name: json["name"].as_str().unwrap().to_string(),
+    //             done: json["done"].as_bool().unwrap()
+    //         })
+    //     }
+    // }
 }

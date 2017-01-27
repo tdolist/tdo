@@ -1,2 +1,14 @@
 name: tdo
 about: A todo list tool for the terminal
+subcommands:
+    - all:
+        about: Lists all tasks.
+    - add:
+        about: Add a task to a certain list or the default list.
+        args:
+            - task:
+                required: true
+                help: Task you want to add
+                takes_value: true
+            - list:
+                help: List you want to add the task to

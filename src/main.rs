@@ -1,23 +1,29 @@
 #![feature(custom_derive)]
-#[macro_use] extern crate clap;
+#[macro_use]
+extern crate clap;
 
 #[macro_use]
 extern crate serde_derive;
 extern crate serde_json;
 
-#[allow(unused_imports, unused_variables, dead_code)]
+#[allow(unused_imports)]
 
 use std::fs::File;
+use std::io::Read;
+use serde_json::Value;
 use clap::App;
 mod todo;
 mod list;
 mod storage;
 
+#[allow(unused_variables)]
 fn main() {
     let yml = load_yaml!("cli.yml");
     let m = App::from_yaml(yml).version(crate_version!()).author(crate_authors!()).get_matches();
-    }
+    test();
+}
 
+#[allow(dead_code)]
 fn test() {
     let mut li = list::TodoList::new("kek");
     let tdo1 = todo::Todo::new(0, "Bla");
@@ -35,12 +41,8 @@ fn test() {
 
     // deserialisation
 
-    // let mut inpf = File::open("foo.json").unwrap();
-    // let mut serialized = String::new();
-    //
-    // let _ = inpf.read_to_string(&mut serialized);
-    //
-    // if let Ok(j) = todo::Todo::from_json(&bla) {
-    //     println!("{:?}", j);
-    // }
+    let mut s = String::new();
+    let _ = File::open("foo.json").unwrap().read_to_string(&mut s).unwrap();
+    let json: Value = serde_json::from_str(&s).unwrap();
+    println!("{:?}", serde_json::to_string_pretty(&json).unwrap());
 }

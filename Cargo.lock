@@ -3,9 +3,6 @@ name = "tdo"
 version = "0.0.1"
 dependencies = [
  "clap 2.20.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "serde 0.9.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "serde_derive 0.9.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "serde_json 0.9.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "tdo_core 0.1.0 (git+https://github.com/tdolist/tdo_core)",
 ]
 

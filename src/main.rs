@@ -9,9 +9,7 @@ extern crate tdo_core;
 
 
 #[allow(unused_imports)]
-
 use std::fs::File;
-use std::io::Read;
 use tdo_core::{todo, list, storage};
 use clap::App;
 
@@ -35,17 +33,12 @@ fn test() {
     tdo.lists.push(li);
 
 
-    let mut f = File::create("foo.json").unwrap();
-
-    let _ = serde_json::to_writer_pretty(&mut f, &tdo);
-
-    println!("{:?}", serde_json::to_string_pretty(&tdo).unwrap());
+    let _ = tdo.save("foo.json");
 
     // deserialisation
 
-    let mut s = String::new();
-    let _ = File::open("foo.json").unwrap().read_to_string(&mut s).unwrap();
-    let json: list::Tdo = serde_json::from_str(&s).unwrap();
-    println!("{:?}", &json);
-    println!("{:?}", &json.lists[0]);
+    let mut new_tdo = list::Tdo::new();
+    new_tdo.load("foo.json");
+    println!("{:?}", &new_tdo);
+    println!("{:?}", &new_tdo.lists[0]);
 }

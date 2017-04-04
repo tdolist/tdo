@@ -4,5 +4,5 @@ version = "0.0.1"
 authors = ["Felix Wittwer <dev@felixwittwer.de>", "Felix Döring <mail@felixdoering.com>"]
 
 [dependencies]
-clap = {version = "2.19", features = ["yaml"]}
-tdo_core = { git = 'https://github.com/tdolist/tdo_core' }
+clap = {version = "2.20.1", features = ["yaml"]}
+tdo-core = { path = '../tdo-core' }

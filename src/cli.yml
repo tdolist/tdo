@@ -1,5 +1,6 @@
 name: tdo
 about: A todo list tool for the terminal
+author: Felix Wittwer <dev@felixwittwer.de>, Felix Döring <development@felixdoering.com>
 subcommands:
     - all:
         about: Lists all tasks.
@@ -12,3 +13,17 @@ subcommands:
                 takes_value: true
             - list:
                 help: List you want to add the task to
+    - edit:
+        about: Edit a task description.
+    - done:
+        about: Mark a task as 'done'.
+    - newlist:
+        about: Create a new todo list.
+    - remove:
+        about: Remove a todo list and its contents.
+    - clean:
+        about: Removes all tasks that have been marked as done.
+    - lists:
+        about: Display done/undone statistics of all lists.
+    - reset:
+        about: DANGER ZONE. Deletes all your todos and todo lists.

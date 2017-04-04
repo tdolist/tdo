@@ -1,7 +1,7 @@
 [package]
 name = "tdo"
 version = "0.0.1"
-authors = ["Felix Wittwer <dev@felixwittwer.de>", "Felix Döring <mail@felixdoering.com>"]
+authors = ["Felix Wittwer <dev@felixwittwer.de>", "Felix Döring <development@felixdoering.com>"]
 
 [dependencies]
 clap = {version = "2.20.1", features = ["yaml"]}

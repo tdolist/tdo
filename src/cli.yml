@@ -13,14 +13,35 @@ subcommands:
                 takes_value: true
             - list:
                 help: List you want to add the task to
+                takes_value: true
     - edit:
         about: Edit a task description.
+        args:
+            - id:
+                required: true
+                help: ID of the task you want to edit
+                takes_value: true
     - done:
         about: Mark a task as 'done'.
+        args:
+            - id:
+                required: true
+                help: ID of the task you want to mark ad done
+                takes_value: true
     - newlist:
         about: Create a new todo list.
+        args:
+            - listname:
+                required: true
+                help: Name of the new list
+                takes_value: true
     - remove:
         about: Remove a todo list and its contents.
+        args:
+            - listname:
+                required: true
+                help: Name of the list to be deleted
+                takes_value: true
     - clean:
         about: Removes all tasks that have been marked as done.
     - lists:

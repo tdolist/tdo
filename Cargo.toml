@@ -6,3 +6,4 @@ authors = ["Felix Wittwer <dev@felixwittwer.de>", "Felix Döring <development@fe
 [dependencies]
 clap = {version = "2.23.1", features = ["yaml"]}
 tdo-core = { git = 'https://github.com/tdolist/tdo-core.git' }
+tdo-export = { git = 'https://github.com/tdolist/tdo-export.git' }

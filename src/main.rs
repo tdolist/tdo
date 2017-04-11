@@ -12,13 +12,14 @@ use clap::App;
 use std::env;
 use std::process::exit;
 use std::io::Write;
+mod subcommands;
 
 
 #[allow(unused_variables)]
 fn main() {
     // initialize the clap App handle
     let yml = load_yaml!("cli.yml");
-    let matches = App::from_yaml(yml).version(crate_version!()).get_matches();
+    let app = App::from_yaml(yml).version(crate_version!()).get_matches();
 
     let save_path = match env::home_dir() {
         Some(path) => path.join(".tdo/list.json"),
@@ -29,8 +30,7 @@ fn main() {
         }
     };
     println!("[DEBUG] location: {:?}", &save_path);
-
-    let tdo = match tdo::Tdo::load(save_path.to_str().unwrap()) {
+    let mut tdo: tdo::Tdo = match tdo::Tdo::load(save_path.to_str().unwrap()) {
         Ok(loaded) => loaded,
         Err(error::ErrorKind::StorageError(error::StorageError::FileNotFound)) => tdo::Tdo::new(),
         Err(error::ErrorKind::StorageError(error::StorageError::FileCorrupted)) => {
@@ -49,10 +49,72 @@ fn main() {
         }
     };
 
+    match app.subcommand() {
+        ("", None) => subcommands::print_out(&tdo, false),
+        ("all", Some(_)) => subcommands::print_out(&tdo, true),
+        ("add", Some(sub_m)) => {
+            let task_string = sub_m.value_of("task").unwrap();
+            let task_list = sub_m.value_of("list").unwrap_or("default");
+            subcommands::add(&mut tdo, task_string, task_list);
+        }
+        ("edit", Some(sub_m)) => {
+            let id: u32 = match sub_m.value_of("id").unwrap().parse() {
+                Ok(x) => x,
+                Err(_) => {
+                    println!("[Error] id must be va valid integer.");
+                    exit(1);
+                }
+            };
+            subcommands::edit(&mut tdo, id);
+        }
+        ("done", Some(sub_m)) => {
+            let id: u32 = match sub_m.value_of("id").unwrap().parse() {
+                Ok(x) => x,
+                Err(_) => {
+                    println!("[Error] id must be va valid integer.");
+                    exit(1);
+                }
+            };
+            subcommands::done(&mut tdo, id);
+        }
+        ("newlist", Some(sub_m)) => {
+            let new_list = match sub_m.value_of("listname") {
+                Some(x) => x,
+                None => {
+                    println!("[Error] listname could not be parsed.");
+                    exit(1);
+                }
+            };
+            subcommands::newlist(&mut tdo, new_list);
+        }
+        ("remove", Some(sub_m)) => {
+            let list_name = match sub_m.value_of("listname") {
+                Some(x) => x,
+                None => {
+                    println!("[Error] listname could not be parsed.");
+                    exit(1);
+                }
+            };
+            subcommands::remove(&mut tdo, list_name);
+        }
+        ("clean", Some(_)) => subcommands::clean(&mut tdo),
+        ("lists", Some(_)) => subcommands::lists(&tdo),
+        ("export", Some(sub_m)) => {
+            let filepath = match sub_m.value_of("destination") {
+                Some(x) => x,
+                None => {
+                    println!("[Error] destination could not be parsed.");
+                    exit(1);
+                }
+            };
+            subcommands::export(&tdo, filepath, sub_m.is_present("undone"));
+        }
+        ("reset", Some(_)) => subcommands::reset(&mut tdo),
+        _ => println!("{:?}", app.usage()),
+    };
 
-    tdo.save("./test.json").unwrap();
     println!("[DEBUG] tdo json content: {:?}", tdo);
-    match File::create("export.md") {
+    match File::create("tdo/export.md") {
         Ok(mut file) => {
             file.write(&tdo_export::gen_tasks_md(&tdo, true).unwrap().into_bytes()).unwrap();
         }

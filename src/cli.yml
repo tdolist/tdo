@@ -46,5 +46,14 @@ subcommands:
         about: Removes all tasks that have been marked as done.
     - lists:
         about: Display done/undone statistics of all lists.
+    - export:
+        about: Export your todos as markdown.
+        args:
+            - destination:
+                required: true
+                help: Location to export the markdown
+                takes_value: true
+            - undone:
+                help: Export only undone tasks (default exports all)
     - reset:
         about: DANGER ZONE. Deletes all your todos and todo lists.

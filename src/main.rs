@@ -57,7 +57,7 @@ fn main() {
         }
         ("edit", Some(sub_m)) => {
             let id: u32 = match sub_m.value_of("id").unwrap().parse() {
-                Ok(x) => x,
+                Ok(id) => id,
                 Err(_) => {
                     println!("[Error] id must be va valid integer.");
                     exit(1);
@@ -67,7 +67,7 @@ fn main() {
         }
         ("done", Some(sub_m)) => {
             let id: u32 = match sub_m.value_of("id").unwrap().parse() {
-                Ok(x) => x,
+                Ok(id) => id,
                 Err(_) => {
                     println!("[Error] id must be va valid integer.");
                     exit(1);
@@ -77,7 +77,7 @@ fn main() {
         }
         ("newlist", Some(sub_m)) => {
             let new_list = match sub_m.value_of("listname") {
-                Some(x) => x,
+                Some(name) => name,
                 None => {
                     println!("[Error] listname could not be parsed.");
                     exit(1);
@@ -87,7 +87,7 @@ fn main() {
         }
         ("remove", Some(sub_m)) => {
             let list_name = match sub_m.value_of("listname") {
-                Some(x) => x,
+                Some(name) => name,
                 None => {
                     println!("[Error] listname could not be parsed.");
                     exit(1);
@@ -99,7 +99,7 @@ fn main() {
         ("lists", Some(_)) => subcommands::lists(&tdo),
         ("export", Some(sub_m)) => {
             let filepath = match sub_m.value_of("destination") {
-                Some(x) => x,
+                Some(path) => path,
                 None => {
                     println!("[Error] destination could not be parsed.");
                     exit(1);

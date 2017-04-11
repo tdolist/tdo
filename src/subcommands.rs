@@ -1,5 +1,9 @@
 #![allow(unused_variables, unused_imports)]
-use super::tdo_core::{tdo, error};
+use tdo_core::{tdo, error};
+use tdo_export;
+use std::fs::File;
+use std::io::Write;
+
 
 pub fn print_out(tdo: &super::tdo_core::tdo::Tdo, all: bool) {
     println!("print out", );
@@ -35,6 +39,13 @@ pub fn lists(tdo: &tdo::Tdo) {
 
 pub fn export(tdo: &tdo::Tdo, destination: &str, undone: bool) {
     println!("export", );
+    // TODO: check/create path; check for overwrite
+    match File::create(destination) {
+        Ok(mut file) => {
+            file.write(&tdo_export::gen_tasks_md(&tdo, true).unwrap().into_bytes()).unwrap();
+        }
+        Err(x) => println!("{:?}", x),
+    }
 }
 
 pub fn reset(tdo: &mut tdo::Tdo) {

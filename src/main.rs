@@ -6,12 +6,10 @@ extern crate tdo_export;
 
 
 #[allow(unused_imports)]
-use std::fs::File;
 use tdo_core::{tdo, error};
 use clap::App;
 use std::env;
 use std::process::exit;
-use std::io::Write;
 mod subcommands;
 
 
@@ -114,10 +112,5 @@ fn main() {
     };
 
     println!("[DEBUG] tdo json content: {:?}", tdo);
-    match File::create("tdo/export.md") {
-        Ok(mut file) => {
-            file.write(&tdo_export::gen_tasks_md(&tdo, true).unwrap().into_bytes()).unwrap();
-        }
-        Err(x) => println!("{:?}", x),
-    }
+
 }

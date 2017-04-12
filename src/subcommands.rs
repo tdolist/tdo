@@ -4,10 +4,7 @@ use tdo_export;
 use std::fs::File;
 use std::io::{Write, Read, stdin, stdout};
 use super::exit;
-
-extern crate colored;
-
-use colored::*;
+use super::colored::*;
 
 pub fn print_out(tdo: &super::tdo_core::tdo::Tdo, all: bool) {
     match tdo_export::render_terminal_output(tdo, all) {
@@ -16,7 +13,13 @@ pub fn print_out(tdo: &super::tdo_core::tdo::Tdo, all: bool) {
                 println!("{}", item);
             }
         }
-        None => println!("No todos yet"),
+        None => {
+            if tdo.get_highest_id() > 0 {
+                println!("No undone todos");
+            } else {
+                println!("No todos yet");
+            }
+        }
     }
 }
 

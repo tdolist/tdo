@@ -12,6 +12,7 @@ use tdo_core::{tdo, error};
 use clap::App;
 use std::env;
 use std::process::exit;
+use colored::*;
 mod subcommands;
 
 

@@ -65,13 +65,16 @@ pub fn done(tdo: &mut tdo::Tdo, id: u32) {
 
 pub fn newlist(tdo: &mut tdo::Tdo, new_list: &str) {
     match tdo.add_list(list::TodoList::new(new_list)) {
-        Ok(()) => {}
+        Ok(()) => { println!("Created a new list named '{}'", new_list); }
         Err(e) => errorprint!(e.description()),
     }
 }
 
 pub fn remove(tdo: &mut tdo::Tdo, list_name: &str) {
-    println!("remove", );
+    match tdo.remove_list(list_name) {
+        Ok(()) => { println!("Removed the list '{}'", list_name); }
+        Err(e) => errorprint!(e),
+    }
 }
 
 pub fn clean(tdo: &mut tdo::Tdo) {

@@ -27,7 +27,6 @@ fn main() {
             exit(1);
         }
     };
-    println!("[DEBUG] location: {:?}", &save_path);
     let mut tdo: tdo::Tdo = match tdo::Tdo::load(save_path.to_str().unwrap()) {
         Ok(loaded) => loaded,
         Err(error::ErrorKind::StorageError(error::StorageError::FileNotFound)) => tdo::Tdo::new(),
@@ -110,7 +109,4 @@ fn main() {
         ("reset", Some(_)) => subcommands::reset(&mut tdo),
         _ => println!("{:?}", app.usage()),
     };
-
-    println!("[DEBUG] tdo json content: {:?}", tdo);
-
 }

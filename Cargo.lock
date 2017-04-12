@@ -142,7 +142,7 @@ dependencies = [
 [[package]]
 name = "tdo-core"
 version = "0.1.0"
-source = "git+https://github.com/tdolist/tdo-core.git#cfe358684de622e089a40ec27e9a0ce2a18bb206"
+source = "git+https://github.com/tdolist/tdo-core.git#9999012c90dda0f270c22d2d4a950eef26191930"
 dependencies = [
  "json 0.11.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 0.9.13 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -153,7 +153,7 @@ dependencies = [
 [[package]]
 name = "tdo-export"
 version = "0.1.0"
-source = "git+https://github.com/tdolist/tdo-export.git#ddde1be1efe1c2c63ae9935422a7678f09345cfa"
+source = "git+https://github.com/tdolist/tdo-export.git#885ded896fcf472a6356238c5de003d2015b3186"
 dependencies = [
  "libc 0.2.21 (registry+https://github.com/rust-lang/crates.io-index)",
  "tdo-core 0.1.0 (git+https://github.com/tdolist/tdo-core.git)",

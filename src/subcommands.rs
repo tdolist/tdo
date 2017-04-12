@@ -6,7 +6,14 @@ use std::io::Write;
 
 
 pub fn print_out(tdo: &super::tdo_core::tdo::Tdo, all: bool) {
-    println!("print out", );
+    match tdo_export::render_terminal_output(&tdo, all) {
+        Some(printlines) => {
+            for item in printlines.iter() {
+                println!("{}", item);
+            }
+        }
+        None => println!("No todos yet"),
+    }
 }
 
 pub fn add(tdo: &mut tdo::Tdo, new_todo: &str, in_list: &str) {

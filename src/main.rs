@@ -7,6 +7,7 @@ extern crate colored;
 
 #[macro_use]
 mod macros;
+mod filesystem;
 
 use tdo_core::{tdo, error};
 use clap::App;

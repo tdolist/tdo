@@ -6,6 +6,8 @@ use std::io::{Write, Read, stdin, stdout};
 use super::exit;
 use super::colored::*;
 
+use filesystem;
+
 pub fn print_out(tdo: &super::tdo_core::tdo::Tdo, all: bool) {
     match tdo_export::render_terminal_output(tdo, all) {
         Some(printlines) => {
@@ -97,8 +99,16 @@ pub fn lists(tdo: &tdo::Tdo) {
 }
 
 pub fn export(tdo: &tdo::Tdo, destination: &str, undone: bool) {
+    let target = match filesystem::validate_target_file(destination) {
+        Ok(path) => path,
+        Err(e) => {
+            // TODO: Change me!
+            println!("{}", e);
+            return;
+        }
+    };
     // TODO: check/create path; check for overwrite
-    match File::create(destination) {
+    match File::create(target) {
         Ok(mut file) => {
             file.write(&tdo_export::gen_tasks_md(tdo, true).unwrap().into_bytes())
                 .unwrap();

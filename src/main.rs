@@ -34,13 +34,13 @@ fn main() {
     };
     let mut tdo: tdo::Tdo = match tdo::Tdo::load(save_path.to_str().unwrap()) {
         Ok(loaded) => loaded,
-        Err(error::ErrorKind::StorageError(error::StorageError::FileNotFound)) => tdo::Tdo::new(),
-        Err(error::ErrorKind::StorageError(error::StorageError::FileCorrupted)) => {
+        Err(error::Error(error::ErrorKind::StorageError(error::storage_error::ErrorKind::FileNotFound), _)) => tdo::Tdo::new(),
+        Err(error::Error(error::ErrorKind::StorageError(error::storage_error::ErrorKind::FileCorrupted), _)) => {
             errorprint!("The saved JSON could not be parsed.");
             errorprint!("Please fix the saved json file manually or delete it to continue.");
             exit(1);
         }
-        Err(error::ErrorKind::StorageError(error::StorageError::UnableToConvert)) => {
+        Err(error::Error(error::ErrorKind::StorageError(error::storage_error::ErrorKind::UnableToConvert), _)) => {
             errorprint!("The File could not be converted to the new version automatically.");
             errorprint!("Please fix the saved json file manually or delete it to continue.");
             exit(1);

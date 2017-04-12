@@ -23,7 +23,7 @@ pub fn print_out(tdo: &super::tdo_core::tdo::Tdo, all: bool) {
 pub fn add(tdo: &mut tdo::Tdo, new_todo: &str, in_list: Option<&str>) {
     let todo = todo::Todo::new(tdo.get_highest_id() + 1, new_todo);
     match tdo.add_todo(in_list, todo) {
-        Err(e) => errorprint!(e),
+        Err(e) => errorprint!(e.description()),
         _ => {}
     }
 }
@@ -32,14 +32,14 @@ pub fn edit(tdo: &mut tdo::Tdo, id: u32) {
     let list = match tdo.find_id(id) {
         Ok(list_id) => list_id,
         Err(e) => {
-            errorprint!(e);
+            errorprint!(e.description());
             exit(1);
         }
     };
     let position = match tdo.lists[list].contains_id(id) {
         Ok(position) => position,
         Err(e) => {
-            errorprint!(e);
+            errorprint!(e.description());
             exit(1);
         }
     };
@@ -56,7 +56,7 @@ pub fn edit(tdo: &mut tdo::Tdo, id: u32) {
 pub fn done(tdo: &mut tdo::Tdo, id: u32) {
     match tdo.done_id(id) {
         Ok(()) => {}
-        Err(e) => println!("{:?}", e),
+        Err(e) => errorprint!(e.description()),
     }
 }
 
@@ -91,14 +91,13 @@ pub fn lists(tdo: &tdo::Tdo) {
 }
 
 pub fn export(tdo: &tdo::Tdo, destination: &str, undone: bool) {
-    println!("export", );
     // TODO: check/create path; check for overwrite
     match File::create(destination) {
         Ok(mut file) => {
             file.write(&tdo_export::gen_tasks_md(tdo, true).unwrap().into_bytes())
                 .unwrap();
         }
-        Err(x) => println!("{:?}", x),
+        Err(e) => errorprint!(e),
     }
 }
 

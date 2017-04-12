@@ -61,7 +61,10 @@ pub fn done(tdo: &mut tdo::Tdo, id: u32) {
 }
 
 pub fn newlist(tdo: &mut tdo::Tdo, new_list: &str) {
-    println!("newlist", );
+    match tdo.add_list(list::TodoList::new(new_list)) {
+        Ok(()) => {}
+        Err(e) => errorprint!(e.description()),
+    }
 }
 
 pub fn remove(tdo: &mut tdo::Tdo, list_name: &str) {
@@ -69,7 +72,7 @@ pub fn remove(tdo: &mut tdo::Tdo, list_name: &str) {
 }
 
 pub fn clean(tdo: &mut tdo::Tdo) {
-    println!("clean", );
+    tdo.clean_lists();
 }
 
 pub fn lists(tdo: &tdo::Tdo) {
@@ -100,7 +103,8 @@ pub fn export(tdo: &tdo::Tdo, destination: &str, undone: bool) {
 }
 
 pub fn reset(tdo: &mut tdo::Tdo) -> Option<tdo::Tdo> {
-    println!("[WARNING] Are you sure you want to delete all todos and lists? [y/N] ");
+    println!("{}",
+             "[WARNING] Are you sure you want to delete all todos and lists? [y/N] ".red());
     let mut answer = String::new();
     stdin().read_line(&mut answer).unwrap();
     let should_delete = match answer.to_lowercase().trim() {

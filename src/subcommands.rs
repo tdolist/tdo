@@ -6,7 +6,7 @@ use std::io::{Write, Read, stdin, stdout};
 use super::exit;
 
 pub fn print_out(tdo: &super::tdo_core::tdo::Tdo, all: bool) {
-    match tdo_export::render_terminal_output(&tdo, all) {
+    match tdo_export::render_terminal_output(tdo, all) {
         Some(printlines) => {
             for item in printlines.iter() {
                 println!("{}", item);
@@ -50,7 +50,10 @@ pub fn edit(tdo: &mut tdo::Tdo, id: u32) {
 }
 
 pub fn done(tdo: &mut tdo::Tdo, id: u32) {
-    println!("done", );
+    match tdo.done_id(id) {
+        Ok(()) => {}
+        Err(e) => println!("{:?}", e),
+    }
 }
 
 pub fn newlist(tdo: &mut tdo::Tdo, new_list: &str) {
@@ -74,7 +77,7 @@ pub fn export(tdo: &tdo::Tdo, destination: &str, undone: bool) {
     // TODO: check/create path; check for overwrite
     match File::create(destination) {
         Ok(mut file) => {
-            file.write(&tdo_export::gen_tasks_md(&tdo, true).unwrap().into_bytes()).unwrap();
+            file.write(&tdo_export::gen_tasks_md(tdo, true).unwrap().into_bytes()).unwrap();
         }
         Err(x) => println!("{:?}", x),
     }

@@ -5,6 +5,10 @@ use std::fs::File;
 use std::io::{Write, Read, stdin, stdout};
 use super::exit;
 
+extern crate colored;
+
+use colored::*;
+
 pub fn print_out(tdo: &super::tdo_core::tdo::Tdo, all: bool) {
     match tdo_export::render_terminal_output(tdo, all) {
         Some(printlines) => {
@@ -69,7 +73,18 @@ pub fn clean(tdo: &mut tdo::Tdo) {
 }
 
 pub fn lists(tdo: &tdo::Tdo) {
-    println!("lists", );
+    println!("Your todo collection currently encompasses the following lists:\n");
+
+    for list in tdo.lists.iter() {
+        let done = list.list
+            .iter()
+            .fold(0, |acc, &ref item| if item.done { acc + 1 } else { acc });
+        let undone: u64 = (list.list.len() - done) as u64;
+        println!("    [{undone}|{done}] {name}",
+                 undone = undone.to_string().red(),
+                 done = (done as u64).to_string().green(),
+                 name = &list.name);
+    }
 }
 
 pub fn export(tdo: &tdo::Tdo, destination: &str, undone: bool) {
@@ -77,7 +92,8 @@ pub fn export(tdo: &tdo::Tdo, destination: &str, undone: bool) {
     // TODO: check/create path; check for overwrite
     match File::create(destination) {
         Ok(mut file) => {
-            file.write(&tdo_export::gen_tasks_md(tdo, true).unwrap().into_bytes()).unwrap();
+            file.write(&tdo_export::gen_tasks_md(tdo, true).unwrap().into_bytes())
+                .unwrap();
         }
         Err(x) => println!("{:?}", x),
     }

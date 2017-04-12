@@ -3,6 +3,7 @@ extern crate clap;
 
 extern crate tdo_core;
 extern crate tdo_export;
+extern crate colored;
 
 #[macro_use]
 mod macros;
@@ -19,7 +20,9 @@ mod subcommands;
 fn main() {
     // initialize the clap App handle
     let yml = load_yaml!("cli.yml");
-    let app = App::from_yaml(yml).version(crate_version!()).get_matches();
+    let app = App::from_yaml(yml)
+        .version(crate_version!())
+        .get_matches();
 
     let save_path = match env::home_dir() {
         Some(path) => path.join(".tdo/list.json"),

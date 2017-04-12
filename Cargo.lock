@@ -142,7 +142,7 @@ dependencies = [
 [[package]]
 name = "tdo-core"
 version = "0.1.0"
-source = "git+https://github.com/tdolist/tdo-core.git#9999012c90dda0f270c22d2d4a950eef26191930"
+source = "git+https://github.com/tdolist/tdo-core.git#cf110baea3bed59496d438cad3bb1a50d07f7f1a"
 dependencies = [
  "json 0.11.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 0.9.13 (registry+https://github.com/rust-lang/crates.io-index)",

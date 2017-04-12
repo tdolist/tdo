@@ -4,13 +4,15 @@ extern crate clap;
 extern crate tdo_core;
 extern crate tdo_export;
 
+#[macro_use]
+mod macros;
 
-#[allow(unused_imports)]
 use tdo_core::{tdo, error};
 use clap::App;
 use std::env;
 use std::process::exit;
 mod subcommands;
+
 
 
 #[allow(unused_variables)]
@@ -22,7 +24,7 @@ fn main() {
     let save_path = match env::home_dir() {
         Some(path) => path.join(".tdo/list.json"),
         None => {
-            println!("[ERROR] You seem to have no home directory. Unfortunately this is required \
+            errorprint!("You seem to have no home directory. Unfortunately this is required \
                       in order to use tdo.");
             exit(1);
         }
@@ -31,13 +33,13 @@ fn main() {
         Ok(loaded) => loaded,
         Err(error::ErrorKind::StorageError(error::StorageError::FileNotFound)) => tdo::Tdo::new(),
         Err(error::ErrorKind::StorageError(error::StorageError::FileCorrupted)) => {
-            println!("[ERROR] The saved JSON could not be parsed.\n\
-            [ERROR] Please fix the saved json file manually or delete it to continue.");
+            errorprint!("The saved JSON could not be parsed.");
+            errorprint!("Please fix the saved json file manually or delete it to continue.");
             exit(1);
         }
         Err(error::ErrorKind::StorageError(error::StorageError::UnableToConvert)) => {
-            println!("[ERROR] The File could not be converted to the new version automatically.\n\
-            [ERROR] Please fix the saved json file manually or delete it to continue.");
+            errorprint!("The File could not be converted to the new version automatically.");
+            errorprint!("Please fix the saved json file manually or delete it to continue.");
             exit(1);
         }
         Err(e) => {
@@ -51,14 +53,13 @@ fn main() {
         ("all", Some(_)) => subcommands::print_out(&tdo, true),
         ("add", Some(sub_m)) => {
             let task_string = sub_m.value_of("task").unwrap();
-            let task_list = sub_m.value_of("list").unwrap_or("default");
-            subcommands::add(&mut tdo, task_string, task_list);
+            subcommands::add(&mut tdo, task_string, sub_m.value_of("list"));
         }
         ("edit", Some(sub_m)) => {
             let id: u32 = match sub_m.value_of("id").unwrap().parse() {
                 Ok(id) => id,
                 Err(_) => {
-                    println!("[Error] id must be va valid integer.");
+                    errorprint!("id must be va valid integer.");
                     exit(1);
                 }
             };
@@ -68,7 +69,7 @@ fn main() {
             let id: u32 = match sub_m.value_of("id").unwrap().parse() {
                 Ok(id) => id,
                 Err(_) => {
-                    println!("[Error] id must be va valid integer.");
+                    errorprint!("id must be va valid integer.");
                     exit(1);
                 }
             };
@@ -78,7 +79,7 @@ fn main() {
             let new_list = match sub_m.value_of("listname") {
                 Some(name) => name,
                 None => {
-                    println!("[Error] listname could not be parsed.");
+                    errorprint!("listname could not be parsed.");
                     exit(1);
                 }
             };
@@ -88,7 +89,7 @@ fn main() {
             let list_name = match sub_m.value_of("listname") {
                 Some(name) => name,
                 None => {
-                    println!("[Error] listname could not be parsed.");
+                    errorprint!("listname could not be parsed.");
                     exit(1);
                 }
             };
@@ -100,13 +101,23 @@ fn main() {
             let filepath = match sub_m.value_of("destination") {
                 Some(path) => path,
                 None => {
-                    println!("[Error] destination could not be parsed.");
+                    errorprint!("destination could not be parsed");
                     exit(1);
                 }
             };
             subcommands::export(&tdo, filepath, sub_m.is_present("undone"));
         }
-        ("reset", Some(_)) => subcommands::reset(&mut tdo),
+        ("reset", Some(_)) => {
+            match subcommands::reset(&mut tdo) {
+                Some(x) => tdo = x,
+                None => {}
+            }
+        }
         _ => println!("{:?}", app.usage()),
     };
+
+    match tdo.save(save_path.to_str().unwrap()) {
+        Err(e) => errorprint!(e),
+        _ => {}
+    }
 }

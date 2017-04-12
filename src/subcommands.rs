@@ -2,7 +2,7 @@
 use tdo_core::{tdo, error};
 use tdo_export;
 use std::fs::File;
-use std::io::Write;
+use std::io::{Write, stdin};
 
 
 pub fn print_out(tdo: &super::tdo_core::tdo::Tdo, all: bool) {
@@ -55,6 +55,19 @@ pub fn export(tdo: &tdo::Tdo, destination: &str, undone: bool) {
     }
 }
 
-pub fn reset(tdo: &mut tdo::Tdo) {
-    println!("reset", );
+pub fn reset(tdo: &mut tdo::Tdo) -> Option<tdo::Tdo> {
+    print!("[WARNING] Are you sure you want to delete all todos and lists? [y/N] ");
+    let mut answer = String::new();
+    stdin().read_to_string(&mut answer);
+    let should_delete = match answer.to_lowercase() {
+        "y" | "yes"     => true,
+        "n" | "no" | "" => false,
+        _               => false
+    }
+
+    if should_delete {
+        Some(tdo::Tdo::new())
+    } else {
+        None
+    }
 }

@@ -1,6 +1,6 @@
 [root]
 name = "tdo"
-version = "0.0.1"
+version = "1.0.0"
 dependencies = [
  "clap 2.23.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "colored 1.4.1 (registry+https://github.com/rust-lang/crates.io-index)",

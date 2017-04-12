@@ -1,7 +1,17 @@
 [package]
 name = "tdo"
-version = "0.0.1"
+version = "1.0.0"
 authors = ["Felix Wittwer <dev@felixwittwer.de>", "Felix Döring <development@felixdoering.com>"]
+description = "A todo list tool for the terminal."
+
+homepage = "https://tdolist.de/tdo"
+repository = "https://github.com/tdolist/tdo-rs"
+
+license = "MIT"
+keywords = ["todo", "tdo", "tdolist", "terminal"]
+readme = "README.md"
+
+include = [".gitignore", ".travis.yml", "Cargo.toml", "Cargo.lock", "src/*"]
 
 [dependencies]
 clap = {version = "2.23.1", features = ["yaml"]}

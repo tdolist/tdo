@@ -1,4 +1,4 @@
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 use std::env;
 use std::fs::DirBuilder;
 use std::error::Error;
@@ -34,7 +34,7 @@ impl fmt::Display for ValidationError {
 fn ask_user(question: &str) -> bool {
     let mut answer = String::new();
     loop {
-        print!("{} (y/n) ", question);
+        println!("{} (y/n) ", question);
         io::stdin().read_line(&mut answer).unwrap();
         match answer.trim() {
             "y" | "yes" => return true,
@@ -44,8 +44,8 @@ fn ask_user(question: &str) -> bool {
     }
 }
 
-pub fn validate_target_file(target_path: &str) -> Result<&Path, ValidationError> {
-    let mut path = Path::new(target_path);
+pub fn validate_target_file(target_path: &str) -> Result<PathBuf, ValidationError> {
+    let mut path = PathBuf::from(target_path);
 
     // make sure the target directory is absolute
     if path.is_relative() {
@@ -59,7 +59,7 @@ pub fn validate_target_file(target_path: &str) -> Result<&Path, ValidationError>
         // also, canonicalize the path to generate a clean path w/o relative path descriptions
         // like "../ " and
         path = match cwd.join(path).canonicalize() {
-            Ok(dir) => dir.as_path(),
+            Ok(dir) => dir,
             Err(e) => return Err(ValidationError::EnvError(e)),
         };
     }
@@ -68,7 +68,7 @@ pub fn validate_target_file(target_path: &str) -> Result<&Path, ValidationError>
     if path.exists() {
         if path.is_file() {
             // The path exists and is a file.
-            Ok(path)
+            Ok(path.to_owned())
         } else {
             Err(ValidationError::TargetIsADir)
         }
@@ -77,14 +77,14 @@ pub fn validate_target_file(target_path: &str) -> Result<&Path, ValidationError>
         // if not, ask the user if he's sure that he wants to create the directory recursively
         let parent_dir = path.parent().unwrap();
         if parent_dir.exists() {
-            Ok(path)
+            Ok(path.to_owned())
         } else {
             if ask_user("The path to the target directory does not exist. Create it?") {
                 let _ = match DirBuilder::new().recursive(true).create(parent_dir) {
                     Ok(b) => b,
                     Err(err) => return Err(ValidationError::BuildDirErr(err)),
                 };
-                Ok(path)
+                Ok(path.to_owned())
             } else {
                 Err(ValidationError::UserAbort)
             }

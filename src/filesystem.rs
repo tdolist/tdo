@@ -26,7 +26,7 @@ impl Error for ValidationError {
 
 impl fmt::Display for ValidationError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "[ERROR] {}", self.description())
+        write!(f, "{}", self.description())
     }
 }
 
@@ -53,14 +53,14 @@ pub fn validate_target_file(target_path: &str) -> Result<PathBuf, ValidationErro
         // potential environment errors are reported back as specialized error type
         let cwd = match env::current_dir() {
             Ok(dir) => dir,
-            Err(e) => return Err(ValidationError::EnvError(e)),
+            Err(e) => return Err(ValidationError::EnvError(e).into()),
         };
 
         // also, canonicalize the path to generate a clean path w/o relative path descriptions
         // like "../ " and
         path = match cwd.join(path).canonicalize() {
             Ok(dir) => dir,
-            Err(e) => return Err(ValidationError::EnvError(e)),
+            Err(e) => return Err(ValidationError::EnvError(e).into()),
         };
     }
 
@@ -70,7 +70,7 @@ pub fn validate_target_file(target_path: &str) -> Result<PathBuf, ValidationErro
             // The path exists and is a file.
             Ok(path.to_owned())
         } else {
-            Err(ValidationError::TargetIsADir)
+            Err(ValidationError::TargetIsADir.into())
         }
     } else {
         // check whether the parent directory exists. If so, create the target directory
@@ -82,11 +82,11 @@ pub fn validate_target_file(target_path: &str) -> Result<PathBuf, ValidationErro
             if ask_user("The path to the target directory does not exist. Create it?") {
                 let _ = match DirBuilder::new().recursive(true).create(parent_dir) {
                     Ok(b) => b,
-                    Err(err) => return Err(ValidationError::BuildDirErr(err)),
+                    Err(err) => return Err(ValidationError::BuildDirErr(err).into()),
                 };
                 Ok(path.to_owned())
             } else {
-                Err(ValidationError::UserAbort)
+                Err(ValidationError::UserAbort.into())
             }
         }
     }

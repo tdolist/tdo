@@ -102,12 +102,10 @@ pub fn export(tdo: &tdo::Tdo, destination: &str, undone: bool) {
     let target = match filesystem::validate_target_file(destination) {
         Ok(path) => path,
         Err(e) => {
-            // TODO: Change me!
-            println!("{}", e);
+            errorprint!(e);
             return;
         }
     };
-    // TODO: check/create path; check for overwrite
     match File::create(target) {
         Ok(mut file) => {
             file.write(&tdo_export::gen_tasks_md(tdo, true).unwrap().into_bytes())

@@ -124,7 +124,14 @@ fn main() {
         _ => println!("{:?}", app.usage()),
     };
 
-    match tdo.save(save_path.to_str().unwrap()) {
+    let target = match filesystem::validate_target_file(save_path.to_str().unwrap()) {
+        Ok(path) => path,
+        Err(e) => {
+            errorprint!(e);
+            return;
+        }
+    };
+    match tdo.save(target.to_str().unwrap()) {
         Err(e) => errorprint!(e),
         _ => {}
     }

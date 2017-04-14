@@ -1,11 +1,9 @@
 # tdo-rs
 
-[![License](https://img.shields.io/badge/license-MIT-red.svg?style=flat
-            )](http://mit-license.org)
-[![Language](https://img.shields.io/badge/language-Rust-orange.svg
-            )](https://www.rust-lang.org/)
-[![Build Status](https://travis-ci.org/tdolist/tdo-rs.svg?branch=master
-            )](https://travis-ci.org/tdolist/tdo-rs)
+[![license](https://img.shields.io/crates/l/tdo-export.svg)](https://crates.io/crates/tdo-export/)
+[![Language](https://img.shields.io/badge/language-Rust-orange.svg)](https://www.rust-lang.org/)
+[![version](https://img.shields.io/crates/v/tdo-export.svg)](https://crates.io/crates/tdo-export/)
+[![Build Status](https://travis-ci.org/tdolist/tdo-rs.svg?branch=master)](https://travis-ci.org/tdolist/tdo-rs)
 
 A todo list for the terminal.
 
@@ -21,7 +19,7 @@ Install with cargo:
 cargo install tdo
 ```
 
-For a manual installation, clone this repository or download the [latest release] and run:
+For a manual installation, clone this repository or download the [latest release](https://github.com/tdolist/tdo-rs/releases/latest) and run:
 ```bash
 cd in/your/directory
 cargo build --release

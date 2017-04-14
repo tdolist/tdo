@@ -4,8 +4,8 @@ version = "1.0.0"
 dependencies = [
  "clap 2.23.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "colored 1.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "tdo-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "tdo-export 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "tdo-core 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "tdo-export 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -210,7 +210,7 @@ dependencies = [
 
 [[package]]
 name = "tdo-core"
-version = "0.1.0"
+version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "error-chain 0.10.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -222,12 +222,12 @@ dependencies = [
 
 [[package]]
 name = "tdo-export"
-version = "0.1.1"
+version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "colored 1.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.2.21 (registry+https://github.com/rust-lang/crates.io-index)",
- "tdo-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "tdo-core 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -303,8 +303,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum strsim 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)" = "b4d15c810519a91cf877e7e36e63fe068815c678181439f2f29e2562147c3694"
 "checksum syn 0.11.10 (registry+https://github.com/rust-lang/crates.io-index)" = "171b739972d9a1bfb169e8077238b51f9ebeaae4ff6e08072f7ba386a8802da2"
 "checksum synom 0.11.3 (registry+https://github.com/rust-lang/crates.io-index)" = "a393066ed9010ebaed60b9eafa373d4b1baac186dd7e008555b0f702b51945b6"
-"checksum tdo-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "53c2c9cf6bf8697f4ed459482a83e1225d263c8ea1efa58c9fcde688447d959a"
-"checksum tdo-export 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "f3086c7481ffc979a968d6f9a8c7470210165acf06a69f28a5ba76fb4149b4e9"
+"checksum tdo-core 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "5b763c9475c85a72337047d4cd9f4460877caf346f72033a879630689851db89"
+"checksum tdo-export 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "676befd4850ca11d2699927744e9263f849fe6b5bff95fc16ef2abb27c527354"
 "checksum term_size 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = "e2b6b55df3198cc93372e85dd2ed817f0e38ce8cc0f22eb32391bfad9c4bf209"
 "checksum unicode-segmentation 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "18127285758f0e2c6cf325bb3f3d138a12fee27de4f23e146cd6a179f26c2cf3"
 "checksum unicode-width 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)" = "bf3a113775714a22dcb774d8ea3655c53a32debae63a063acc00a91cc586245f"

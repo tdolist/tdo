@@ -103,7 +103,7 @@ fn main() {
             };
             subcommands::remove(&mut tdo, list_name);
         }
-        ("clean", Some(_)) => subcommands::clean(&mut tdo),
+        ("clean", Some(sub_m)) => subcommands::clean(&mut tdo, sub_m.value_of("listname")),
         ("lists", Some(_)) => subcommands::lists(&tdo),
         ("export", Some(sub_m)) => {
             let filepath = match sub_m.value_of("destination") {

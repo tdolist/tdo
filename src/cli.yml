@@ -44,6 +44,10 @@ subcommands:
                 takes_value: true
     - clean:
         about: Removes all tasks that have been marked as done.
+        args:
+            - listname:
+                help: Clears only the given list
+                takes_value: true
     - lists:
         about: Display done/undone statistics of all lists.
     - export:

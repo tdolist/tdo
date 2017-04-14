@@ -53,7 +53,7 @@ pub fn edit(tdo: &mut tdo::Tdo, id: u32) {
     let mut new_task = String::new();
     stdin().read_line(&mut new_task).unwrap();
     match new_task.trim() {
-        "" => {}
+        "" => {},
         _ => tdo.lists[list].list[position].edit(&new_task.trim()),
     };
 }
@@ -79,8 +79,14 @@ pub fn remove(tdo: &mut tdo::Tdo, list_name: &str) {
     }
 }
 
-pub fn clean(tdo: &mut tdo::Tdo) {
-    tdo.clean_lists();
+pub fn clean(tdo: &mut tdo::Tdo, list_name: Option<&str>) {
+    match list_name {
+        Some(name) => match tdo.clean_list(name) {
+            Err(e) => errorprint!(e.description()),
+            _ => {},
+        },
+        None => tdo.clean_lists(),
+    }
 }
 
 pub fn lists(tdo: &tdo::Tdo) {

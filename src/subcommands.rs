@@ -73,10 +73,25 @@ pub fn newlist(tdo: &mut tdo::Tdo, new_list: &str) {
 }
 
 pub fn remove(tdo: &mut tdo::Tdo, list_name: &str) {
-    match tdo.remove_list(list_name) {
-        Ok(()) => { println!("Removed the list '{}'", list_name); }
-        Err(e) => errorprint!(e),
+    println!("{}",
+             format!("[WARNING] Are you sure you want to delete \"{}\" ans all todos in it? [y/N] ", &list_name).red());
+    let mut answer = String::new();
+    stdin().read_line(&mut answer).unwrap();
+    let should_delete = match answer.to_lowercase().trim() {
+        "y" | "yes" => true,
+        "n" | "no" | "" => false,
+        _ => {
+            errorprint!("No valid answer given. Defaulting to \"no\"");
+            false
+        }
+    };
+    if should_delete {
+        match tdo.remove_list(list_name) {
+            Ok(()) => println!("Removed the list '{}'", list_name),
+            Err(e) => errorprint!(e),
+        }
     }
+
 }
 
 pub fn clean(tdo: &mut tdo::Tdo, list_name: Option<&str>) {

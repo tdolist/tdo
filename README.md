@@ -1,8 +1,8 @@
 # tdo-rs
 
-[![license](https://img.shields.io/crates/l/tdo-export.svg)](https://crates.io/crates/tdo-export/)
+[![license](https://img.shields.io/crates/l/tdo.svg)](https://crates.io/crates/tdo/)
 [![Language](https://img.shields.io/badge/language-Rust-orange.svg)](https://www.rust-lang.org/)
-[![version](https://img.shields.io/crates/v/tdo-export.svg)](https://crates.io/crates/tdo-export/)
+[![version](https://img.shields.io/crates/v/tdo.svg)](https://crates.io/crates/tdo/)
 [![Build Status](https://travis-ci.org/tdolist/tdo-rs.svg?branch=master)](https://travis-ci.org/tdolist/tdo-rs)
 
 A todo list for the terminal.

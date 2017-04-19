@@ -54,7 +54,7 @@ pub fn edit(tdo: &mut tdo::Tdo, id: u32) {
     let mut new_task = String::new();
     stdin().read_line(&mut new_task).unwrap();
     match new_task.trim() {
-        "" => {},
+        "" => {}
         _ => tdo.lists[list].list[position].edit(&new_task.trim()),
     };
 }
@@ -75,7 +75,9 @@ pub fn newlist(tdo: &mut tdo::Tdo, new_list: &str) {
 
 pub fn remove(tdo: &mut tdo::Tdo, list_name: &str) {
     print!("{}",
-             format!("[WARNING] Are you sure you want to delete \"{}\" ans all todos in it? [y/N] ", &list_name).red());
+           format!("[WARNING] Are you sure you want to delete \"{}\" ans all todos in it? [y/N] ",
+                   &list_name)
+                   .red());
     stdout().flush().ok().expect("Could not flush stdout!");
     let mut answer = String::new();
     stdin().read_line(&mut answer).unwrap();
@@ -98,10 +100,12 @@ pub fn remove(tdo: &mut tdo::Tdo, list_name: &str) {
 
 pub fn clean(tdo: &mut tdo::Tdo, list_name: Option<&str>) {
     match list_name {
-        Some(name) => match tdo.clean_list(name) {
-            Err(e) => errorprint!(e.description()),
-            _ => {},
-        },
+        Some(name) => {
+            match tdo.clean_list(name) {
+                Err(e) => errorprint!(e.description()),
+                _ => {}
+            }
+        }
         None => tdo.clean_lists(),
     }
 }
@@ -139,8 +143,9 @@ pub fn export(tdo: &tdo::Tdo, destination: &str, undone: bool) {
 }
 
 pub fn reset(tdo: &mut tdo::Tdo) -> Option<tdo::Tdo> {
-    println!("{}",
-             "[WARNING] Are you sure you want to delete all todos and lists? [y/N] ".red());
+    print!("{}",
+           "[WARNING] Are you sure you want to delete all todos and lists? [y/N] ".red());
+    stdout().flush().ok().expect("Could not flush stdout!");
     let mut answer = String::new();
     stdin().read_line(&mut answer).unwrap();
     let should_delete = match answer.to_lowercase().trim() {

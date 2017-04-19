@@ -3,6 +3,7 @@ use tdo_core::*;
 use tdo_export;
 use std::fs::File;
 use std::io::{Write, Read, stdin, stdout};
+use std::io::prelude::*;
 use super::exit;
 use super::colored::*;
 
@@ -73,8 +74,9 @@ pub fn newlist(tdo: &mut tdo::Tdo, new_list: &str) {
 }
 
 pub fn remove(tdo: &mut tdo::Tdo, list_name: &str) {
-    println!("{}",
+    print!("{}",
              format!("[WARNING] Are you sure you want to delete \"{}\" ans all todos in it? [y/N] ", &list_name).red());
+    stdout().flush().ok().expect("Could not flush stdout!");
     let mut answer = String::new();
     stdin().read_line(&mut answer).unwrap();
     let should_delete = match answer.to_lowercase().trim() {

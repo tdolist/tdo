@@ -4,6 +4,7 @@ use std::fs::DirBuilder;
 use std::error::Error;
 use std::fmt;
 use std::io;
+use std::io::prelude::*;
 
 #[derive(Debug)]
 pub enum ValidationError {
@@ -34,7 +35,8 @@ impl fmt::Display for ValidationError {
 fn ask_user(question: &str) -> bool {
     let mut answer = String::new();
     loop {
-        println!("{} (y/n) ", question);
+        print!("{} (y/n) ", question);
+        io::stdout().flush().ok().expect("Could not flush stdout");
         io::stdin().read_line(&mut answer).unwrap();
         match answer.trim() {
             "y" | "yes" => return true,

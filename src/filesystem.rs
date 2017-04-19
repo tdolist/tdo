@@ -56,12 +56,7 @@ pub fn validate_target_file(target_path: &str) -> Result<PathBuf, ValidationErro
             Err(e) => return Err(ValidationError::EnvError(e).into()),
         };
 
-        // also, canonicalize the path to generate a clean path w/o relative path descriptions
-        // like "../ " and
-        path = match cwd.join(path).canonicalize() {
-            Ok(dir) => dir,
-            Err(e) => return Err(ValidationError::EnvError(e).into()),
-        };
+        path = cwd.join(path);
     }
 
 

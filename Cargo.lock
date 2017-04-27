@@ -265,7 +265,7 @@ dependencies = [
 [[package]]
 name = "tdo-export"
 version = "0.1.2"
-source = "git+https://github.com/tdolist/tdo-export#ef4800ce8c931162cd80d48d3a4cd26d6e21cfc5"
+source = "git+https://github.com/tdolist/tdo-export#4ec8e4cef96159e234c9fd90eded6d1d04c4d3bf"
 dependencies = [
  "colored 1.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.2.21 (registry+https://github.com/rust-lang/crates.io-index)",

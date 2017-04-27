@@ -10,19 +10,10 @@ use super::colored::*;
 use filesystem;
 
 pub fn print_out(tdo: &super::tdo_core::tdo::Tdo, all: bool) {
-    match tdo_export::render_terminal_output(tdo, all) {
-        Some(printlines) => {
-            for item in printlines.iter() {
-                println!("{}", item);
-            }
-        }
-        None => {
-            if tdo.get_highest_id() > 0 {
-                println!("No undone todos");
-            } else {
-                println!("No todos yet");
-            }
-        }
+    if tdo.get_highest_id() > 0 {
+        tdo_export::render_terminal_output(tdo, all);
+    } else {
+        println!("No todos yet");
     }
 }
 
@@ -77,7 +68,7 @@ pub fn remove(tdo: &mut tdo::Tdo, list_name: &str) {
     print!("{}",
            format!("[WARNING] Are you sure you want to delete \"{}\" ans all todos in it? [y/N] ",
                    &list_name)
-                   .red());
+               .red());
     stdout().flush().ok().expect("Could not flush stdout!");
     let mut answer = String::new();
     stdin().read_line(&mut answer).unwrap();

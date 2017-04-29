@@ -19,6 +19,6 @@ path = "src/main.rs"
 
 [dependencies]
 clap = {version = "2.23.1", features = ["yaml"]}
-tdo-core = "0.1.1"
+tdo-core = { git = "https://github.com/tdolist/tdo-core"}
 tdo-export = { git = "https://github.com/tdolist/tdo-export" }
 colored = "1.4"

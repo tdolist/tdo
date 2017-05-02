@@ -2,7 +2,7 @@ name: tdo
 about: A todo list tool for the terminal
 author: Felix Wittwer <dev@felixwittwer.de>, Felix Döring <development@felixdoering.com>
 settings:
-            - ArgsNegateSubcommands
+    - ArgsNegateSubcommands
 args:
     - task:
         help: Task you want to add

@@ -56,88 +56,99 @@ fn main() {
         }
     };
 
-    match app.subcommand() {
-        ("", None) => subcommands::print_out(&tdo, false),
-        ("all", Some(_)) => subcommands::print_out(&tdo, true),
-        ("add", Some(sub_m)) => {
-            let task_string = sub_m.value_of("task").unwrap();
-            subcommands::add(&mut tdo, task_string, sub_m.value_of("list"));
+    match app.subcommand {
+        None => {
+            match app.value_of("task") {
+                Some(task_string) => subcommands::add(&mut tdo, task_string, app.value_of("list")),
+                None => subcommands::print_out(&tdo, false),
+            }
         }
-        ("edit", Some(sub_m)) => {
-            let id: u32 = match sub_m.value_of("id").unwrap().parse() {
-                Ok(id) => id,
-                Err(_) => {
-                    errorprint!("id must be va valid integer.");
-                    exit(1);
+        Some(_) => {
+            match app.subcommand() {
+                ("all", Some(_)) => subcommands::print_out(&tdo, true),
+                ("add", Some(sub_m)) => {
+                    let task_string = sub_m.value_of("task").unwrap();
+                    subcommands::add(&mut tdo, task_string, sub_m.value_of("list"));
                 }
-            };
-            subcommands::edit(&mut tdo, id);
-        }
-        ("done", Some(sub_m)) => {
-            let id: u32 = match sub_m.value_of("id").unwrap().parse() {
-                Ok(id) => id,
-                Err(_) => {
-                    errorprint!("id must be va valid integer.");
-                    exit(1);
+                ("edit", Some(sub_m)) => {
+                    let id: u32 = match sub_m.value_of("id").unwrap().parse() {
+                        Ok(id) => id,
+                        Err(_) => {
+                            errorprint!("id must be va valid integer.");
+                            exit(1);
+                        }
+                    };
+                    subcommands::edit(&mut tdo, id);
                 }
-            };
-            subcommands::done(&mut tdo, id);
-        }
-        ("newlist", Some(sub_m)) => {
-            let new_list = match sub_m.value_of("listname") {
-                Some(name) => name,
-                None => {
-                    errorprint!("listname could not be parsed.");
-                    exit(1);
+                ("done", Some(sub_m)) => {
+                    let id: u32 = match sub_m.value_of("id").unwrap().parse() {
+                        Ok(id) => id,
+                        Err(_) => {
+                            errorprint!("id must be va valid integer.");
+                            exit(1);
+                        }
+                    };
+                    subcommands::done(&mut tdo, id);
                 }
-            };
-            subcommands::newlist(&mut tdo, new_list);
-        }
-        ("remove", Some(sub_m)) => {
-            let list_name = match sub_m.value_of("listname") {
-                Some(name) => name,
-                None => {
-                    errorprint!("listname could not be parsed.");
-                    exit(1);
+                ("newlist", Some(sub_m)) => {
+                    let new_list = match sub_m.value_of("listname") {
+                        Some(name) => name,
+                        None => {
+                            errorprint!("listname could not be parsed.");
+                            exit(1);
+                        }
+                    };
+                    subcommands::newlist(&mut tdo, new_list);
                 }
-            };
-            subcommands::remove(&mut tdo, list_name);
-        }
-        ("github", Some(sub_m)) => {
-            match sub_m.subcommand {
-                None => {
-                    let repo = sub_m.value_of("repo").unwrap();
-                    let title = sub_m.value_of("title").unwrap();
-                    subcommands::github(&mut tdo, repo, title, sub_m.value_of("body"));
+                ("remove", Some(sub_m)) => {
+                    let list_name = match sub_m.value_of("listname") {
+                        Some(name) => name,
+                        None => {
+                            errorprint!("listname could not be parsed.");
+                            exit(1);
+                        }
+                    };
+                    subcommands::remove(&mut tdo, list_name);
                 }
-                Some(_) => {
-                    match sub_m.subcommand() {
-                        ("set", Some(subs)) => subcommands::github_set(&mut tdo, subs.value_of("token")),
-                        _ => println!("{:?}", sub_m),
+                ("github", Some(sub_m)) => {
+                    match sub_m.subcommand {
+                        None => {
+                            let repo = sub_m.value_of("repo").unwrap();
+                            let title = sub_m.value_of("title").unwrap();
+                            subcommands::github(&mut tdo, repo, title, sub_m.value_of("body"));
+                        }
+                        Some(_) => {
+                            match sub_m.subcommand() {
+                                ("set", Some(subs)) => {
+                                    subcommands::github_set(&mut tdo, subs.value_of("token"))
+                                }
+                                _ => println!("{:?}", sub_m),
+                            }
+                        }
                     }
                 }
-            }
-        }
-        ("clean", Some(sub_m)) => subcommands::clean(&mut tdo, sub_m.value_of("listname")),
-        ("lists", Some(_)) => subcommands::lists(&tdo),
-        ("export", Some(sub_m)) => {
-            let filepath = match sub_m.value_of("destination") {
-                Some(path) => path,
-                None => {
-                    errorprint!("destination could not be parsed");
-                    exit(1);
+                ("clean", Some(sub_m)) => subcommands::clean(&mut tdo, sub_m.value_of("listname")),
+                ("lists", Some(_)) => subcommands::lists(&tdo),
+                ("export", Some(sub_m)) => {
+                    let filepath = match sub_m.value_of("destination") {
+                        Some(path) => path,
+                        None => {
+                            errorprint!("destination could not be parsed");
+                            exit(1);
+                        }
+                    };
+                    subcommands::export(&tdo, filepath, sub_m.is_present("undone"));
                 }
-            };
-            subcommands::export(&tdo, filepath, sub_m.is_present("undone"));
-        }
-        ("reset", Some(_)) => {
-            match subcommands::reset(&mut tdo) {
-                Some(x) => tdo = x,
-                None => {}
+                ("reset", Some(_)) => {
+                    match subcommands::reset(&mut tdo) {
+                        Some(x) => tdo = x,
+                        None => {}
+                    }
+                }
+                _ => println!("{}", app.usage()),
             }
         }
-        _ => println!("{}", app.usage()),
-    };
+    }
 
     let target = match filesystem::validate_target_file(save_path.to_str().unwrap()) {
         Ok(path) => path,

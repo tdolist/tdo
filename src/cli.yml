@@ -61,3 +61,27 @@ subcommands:
                 help: Export only undone tasks (default exports all)
     - reset:
         about: DANGER ZONE. Deletes all your todos and todo lists.
+    - github:
+        about: Generate a new todo and a github issue
+        settings:
+            - ArgsNegateSubcommands
+            - SubcommandsNegateReqs
+        args:
+            - repo:
+                required: true
+                help: <username>/<repo> you want to create the issue
+                takes_value: true
+            - title:
+                required: true
+                help: The issue title
+                takes_value: true
+            - body:
+                help: Content of the issue
+                takes_value: true
+        subcommands:
+            - set:
+                about: Set the GitHub Access Token
+                args:
+                    - token:
+                        help: GitHub Access Token
+                        takes_value: true

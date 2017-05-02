@@ -103,6 +103,21 @@ fn main() {
             };
             subcommands::remove(&mut tdo, list_name);
         }
+        ("github", Some(sub_m)) => {
+            match sub_m.subcommand {
+                None => {
+                    let repo = sub_m.value_of("repo").unwrap();
+                    let title = sub_m.value_of("title").unwrap();
+                    subcommands::github(&mut tdo, repo, title, sub_m.value_of("body"));
+                }
+                Some(_) => {
+                    match sub_m.subcommand() {
+                        ("set", Some(subs)) => subcommands::github_set(&mut tdo, subs.value_of("token")),
+                        _ => println!("{:?}", sub_m),
+                    }
+                }
+            }
+        }
         ("clean", Some(sub_m)) => subcommands::clean(&mut tdo, sub_m.value_of("listname")),
         ("lists", Some(_)) => subcommands::lists(&tdo),
         ("export", Some(sub_m)) => {
@@ -121,7 +136,7 @@ fn main() {
                 None => {}
             }
         }
-        _ => println!("{:?}", app.usage()),
+        _ => println!("{}", app.usage()),
     };
 
     let target = match filesystem::validate_target_file(save_path.to_str().unwrap()) {

@@ -89,6 +89,14 @@ pub fn remove(tdo: &mut tdo::Tdo, list_name: &str) {
 
 }
 
+pub fn github_set(tdo: &mut tdo::Tdo, token: Option<&str>) {
+    tdo.set_gh_token(token);
+}
+
+pub fn github(tdo: &mut tdo::Tdo, repo: &str, title: &str, body: Option<&str>) {
+    tdo_export::github_issue(tdo, repo, title, body);
+}
+
 pub fn clean(tdo: &mut tdo::Tdo, list_name: Option<&str>) {
     match list_name {
         Some(name) => {

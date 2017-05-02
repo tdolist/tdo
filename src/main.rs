@@ -100,6 +100,16 @@ fn main() {
                     };
                     subcommands::newlist(&mut tdo, new_list);
                 }
+                ("move", Some(sub_m)) => {
+                    let id: u32 = match sub_m.value_of("id").unwrap().parse() {
+                        Ok(id) => id,
+                        Err(_) => {
+                            errorprint!("id must be va valid integer.");
+                            exit(1);
+                        }
+                    };
+                    subcommands::move_todo(&mut tdo, id, sub_m.value_of("listname").unwrap());
+                }
                 ("remove", Some(sub_m)) => {
                     let list_name = match sub_m.value_of("listname") {
                         Some(name) => name,

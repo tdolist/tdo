@@ -44,6 +44,17 @@ subcommands:
                 required: true
                 help: Name of the new list
                 takes_value: true
+    - move:
+        about: Move a todo to another list.
+        args:
+            - id:
+                required: true
+                help: ID of the task you want to move
+                takes_value: true
+            - listname:
+                required: true
+                help: Name of the new list the todo should be moved to
+                takes_value: true
     - remove:
         about: Remove a todo list and its contents.
         args:

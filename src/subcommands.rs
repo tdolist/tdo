@@ -64,6 +64,13 @@ pub fn newlist(tdo: &mut tdo::Tdo, new_list: &str) {
     }
 }
 
+pub fn move_todo(tdo: &mut tdo::Tdo, id: u32, listname: &str){
+    match tdo.move_todo(id,listname) {
+        Ok(()) => {},
+        Err(e) => errorprint!(e.description()),
+    }
+}
+
 pub fn remove(tdo: &mut tdo::Tdo, list_name: &str) {
     print!("{}",
            format!("[WARNING] Are you sure you want to delete \"{}\" ans all todos in it? [y/N] ",

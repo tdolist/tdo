@@ -1,30 +1,27 @@
 #[macro_use]
 extern crate clap;
-
+extern crate colored;
 extern crate tdo_core;
 extern crate tdo_export;
-extern crate colored;
 
 #[macro_use]
 mod macros;
+mod cli;
 mod filesystem;
 
-use tdo_core::{tdo, error};
-use clap::App;
 use std::env;
-use std::process::exit;
 use colored::*;
+use clap::Shell;
 mod subcommands;
-
+use std::process::exit;
+use tdo_core::{tdo, error};
 
 
 #[allow(unused_variables)]
 fn main() {
     // initialize the clap App handle
-    let yml = load_yaml!("cli.yml");
-    let app = App::from_yaml(yml)
-        .version(crate_version!())
-        .get_matches();
+    // let yml = load_yaml!("cli.yml");
+    let app = cli::cli().get_matches();
 
     let save_path = match env::home_dir() {
         Some(path) => path.join(".tdo/list.json"),
@@ -120,10 +117,17 @@ fn main() {
                     };
                     subcommands::remove(&mut tdo, list_name);
                 }
+                ("completions", Some(sub_m)) => {
+                    if let Some(shell) = sub_m.value_of("shell") {
+                        cli::cli().gen_completions_to("rustup",
+                                                      shell.parse::<Shell>().unwrap(),
+                                                      &mut std::io::stdout());
+                    }
+                }
                 ("github", Some(sub_m)) => {
                     match sub_m.subcommand {
                         None => {
-                            let repo = sub_m.value_of("repo").unwrap();
+                            let repo = sub_m.value_of("repository").unwrap();
                             let title = sub_m.value_of("title").unwrap();
                             subcommands::github(&mut tdo, repo, title, sub_m.value_of("body"));
                         }

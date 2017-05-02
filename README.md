@@ -26,9 +26,9 @@ For a manual installation, clone this repository or download the [latest release
 cd in/your/directory
 cargo build --release
 # copy to /usr/local/
-cp target/release/tdo /usr/local/bin/
+cp ./target/release/tdo /usr/local/bin/
 # or symlink it
-ln -s target/release/tdo /usr/local/bin/tdo
+ln -s ./target/release/tdo /usr/local/bin/tdo
 ```
 ## Usage
 

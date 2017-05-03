@@ -26,7 +26,7 @@ cargo build --release
 # copy to /usr/local/
 cp ./target/release/tdo /usr/local/bin/
 # or symlink it
-ln -s ./target/release/tdo /usr/local/bin/tdo
+ln -s /<path/to/repo>/target/release/tdo /usr/local/bin/tdo
 ```
 ## Usage
 

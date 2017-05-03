@@ -16,13 +16,11 @@ mod subcommands;
 use std::process::exit;
 use tdo_core::{tdo, error};
 
+static TDO_MIN_LEN: u32 = 5;
 
 #[allow(unused_variables)]
 fn main() {
-    // initialize the clap App handle
-    // let yml = load_yaml!("cli.yml");
     let app = cli::cli().get_matches();
-
     let save_path = match env::home_dir() {
         Some(path) => path.join(".tdo/list.json"),
         None => {
@@ -56,7 +54,17 @@ fn main() {
     match app.subcommand {
         None => {
             match app.value_of("task") {
-                Some(task_string) => subcommands::add(&mut tdo, task_string, app.value_of("list")),
+                Some(task_string) => {
+                    if task_string.len() >= TDO_MIN_LEN as usize {
+                        subcommands::add(&mut tdo, task_string, app.value_of("list"));
+                    } else {
+                        errorprint!(format!("The todo has to be at least {} characters long.",
+                                            TDO_MIN_LEN));
+                        println!("If you want to add a todo with less than {} characters use `tdo \
+                                  add` instead",
+                                 TDO_MIN_LEN)
+                    }
+                }
                 None => subcommands::print_out(&tdo, false),
             }
         }
@@ -163,7 +171,6 @@ fn main() {
             }
         }
     }
-
     let target = match filesystem::validate_target_file(save_path.to_str().unwrap()) {
         Ok(path) => path,
         Err(e) => {

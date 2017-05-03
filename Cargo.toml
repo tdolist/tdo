@@ -1,6 +1,6 @@
 [package]
 name = "tdo"
-version = "1.0.0"
+version = "2.0.0"
 authors = ["Felix Wittwer <dev@felixwittwer.de>", "Felix Döring <development@felixdoering.com>"]
 description = "A todo list tool for the terminal."
 

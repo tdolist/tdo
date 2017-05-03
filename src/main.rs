@@ -119,7 +119,7 @@ fn main() {
                 }
                 ("completions", Some(sub_m)) => {
                     if let Some(shell) = sub_m.value_of("shell") {
-                        cli::cli().gen_completions_to("rustup",
+                        cli::cli().gen_completions_to("tdo",
                                                       shell.parse::<Shell>().unwrap(),
                                                       &mut std::io::stdout());
                     }

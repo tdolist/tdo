@@ -3,7 +3,7 @@
 [![license](https://img.shields.io/crates/l/tdo.svg)](https://crates.io/crates/tdo/)
 [![Language](https://img.shields.io/badge/language-Rust-orange.svg)](https://www.rust-lang.org/)
 [![version](https://img.shields.io/crates/v/tdo.svg)](https://crates.io/crates/tdo/)
-[![Build Status](https://travis-ci.org/tdolist/tdo-rs.svg?branch=master)](https://travis-ci.org/tdolist/tdo-rs)
+[![Build Status](https://travis-ci.org/tdolist/tdo.svg?branch=master)](https://travis-ci.org/tdolist/tdo)
 
 A todo list for the terminal.
 

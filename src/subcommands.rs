@@ -18,7 +18,7 @@ pub fn print_out(tdo: &super::tdo_core::tdo::Tdo, all: bool) {
 }
 
 pub fn add(tdo: &mut tdo::Tdo, new_todo: &str, in_list: Option<&str>) {
-    let todo = todo::Todo::new(tdo.get_highest_id() + 1, new_todo);
+    let todo = todo::Todo::new(tdo.get_highest_id() + 1, new_todo, None);
     match tdo.add_todo(in_list, todo) {
         Err(e) => errorprint!(e.description()),
         _ => {}
@@ -102,15 +102,19 @@ pub fn github_set(tdo: &mut tdo::Tdo, token: Option<&str>) {
 
 pub fn github(tdo: &mut tdo::Tdo, repo: &str, title: &str, body: Option<&str>) {
     match tdo_export::github_issue(tdo, repo, title, body) {
-        true => {
-            let todo = todo::Todo::new(tdo.get_highest_id() + 1, format!("{}: {}", repo, title).as_str());
+        Ok(x) => {
+            let todo = todo::Todo::new(tdo.get_highest_id() + 1, format!("{}: {}", repo, title).as_str(), Some(x));
             match tdo.add_todo(None, todo) {
                 Err(e) => errorprint!(e.description()),
                 _ => {}
             }
         }
-        false => errorprint!("Could not create issue.")
+        Err(e) => errorprint!(e.description())
     }
+}
+
+pub fn github_update(tdo: &mut tdo::Tdo){
+    unimplemented!()
 }
 
 pub fn clean(tdo: &mut tdo::Tdo, list_name: Option<&str>) {

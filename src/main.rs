@@ -144,6 +144,7 @@ fn main() {
                                 ("set", Some(subs)) => {
                                     subcommands::github_set(&mut tdo, subs.value_of("token"))
                                 }
+                                ("update", _) => subcommands::github_update(&mut tdo),
                                 _ => println!("{:?}", sub_m),
                             }
                         }

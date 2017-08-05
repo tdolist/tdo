@@ -103,18 +103,35 @@ pub fn github_set(tdo: &mut tdo::Tdo, token: Option<&str>) {
 pub fn github(tdo: &mut tdo::Tdo, repo: &str, title: &str, body: Option<&str>) {
     match tdo_export::github_issue(tdo, repo, title, body) {
         Ok(x) => {
-            let todo = todo::Todo::new(tdo.get_highest_id() + 1, format!("{}: {}", repo, title).as_str(), Some(x));
+            let todo = todo::Todo::new(tdo.get_highest_id() + 1,
+                                       format!("{}: {}", repo, title).as_str(),
+                                       Some(x));
             match tdo.add_todo(None, todo) {
                 Err(e) => errorprint!(e.description()),
                 _ => {}
             }
         }
-        Err(e) => errorprint!(e.description())
+        Err(e) => errorprint!(e.description()),
     }
 }
 
-pub fn github_update(tdo: &mut tdo::Tdo){
-    unimplemented!()
+pub fn github_update(tdo: &mut tdo::Tdo) {
+    let mut list = list::TodoList::default();
+    for todo in tdo.lists[0].list.clone() {
+        if let Some(_) = todo.github {
+            match tdo_export::update_github_issue(&todo, &tdo.get_gh_token().unwrap()) {
+                Ok(res) => list.add(res),
+                Err(x) => {
+                    errorprint!(x.description());
+                    list.add(todo);
+                }
+            }
+        } else {
+            list.add(todo);
+        }
+    }
+    tdo.lists.push(list);
+    tdo.lists.swap_remove(0);
 }
 
 pub fn clean(tdo: &mut tdo::Tdo, list_name: Option<&str>) {

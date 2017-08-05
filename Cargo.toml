@@ -1,6 +1,6 @@
 [package]
 name = "tdo"
-version = "2.0.0"
+version = "2.2.0"
 authors = ["Felix Wittwer <dev@felixwittwer.de>", "Felix Döring <development@felixdoering.com>"]
 description = "A todo list tool for the terminal."
 
@@ -19,6 +19,6 @@ path = "src/main.rs"
 
 [dependencies]
 clap = {version = "2.23.1", features = ["yaml"]}
-tdo-core = { git = "https://github.com/tdolist/tdo-core.git" } #"0.2.0"
-tdo-export = { git = "https://github.com/tdolist/tdo-export.git" } #"0.2.0"
+tdo-core = "0.2"
+tdo-export = "0.2"
 colored = "1.4"

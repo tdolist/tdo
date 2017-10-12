@@ -45,7 +45,7 @@ tdo features working with multiple lists. Add a new list with `tdo newlist listn
 To remove it again, use `tdo remove listname`. You will be prompted to confirm the deletion to avoid accidents.
 
 #### Export your todos
-If you feel like exporting your todos _(e.g. for printing a checklist)_, you can do that with `tdo export filename`. All your todo lists will be exported into Markdown. You can decide if you want to includw tasks that were marked as 'done' or not.
+If you feel like exporting your todos _(e.g. for printing a checklist)_, you can do that with `tdo export filename`. All your todo lists will be exported into Markdown. You can decide if you want to include tasks that were marked as 'done' or not.
 
 ## Future features
 - [ ] Different themes

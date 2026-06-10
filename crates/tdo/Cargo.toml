@@ -1,0 +1,28 @@
+[package]
+name = "tdo"
+version = "3.0.0"
+description = "A todo list tool for the terminal"
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+license.workspace = true
+keywords.workspace = true
+
+[[bin]]
+name = "tdo"
+path = "src/main.rs"
+
+[dependencies]
+tdo-core = { workspace = true }
+anyhow = { workspace = true }
+chrono = { workspace = true }
+clap = { workspace = true }
+colored = { workspace = true }
+comfy-table = { workspace = true }
+dirs = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+toml = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+uuid = { workspace = true }

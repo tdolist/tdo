@@ -4,12 +4,12 @@ use tdo_export;
 use std::fs::File;
 use std::io::{Write, Read, stdin, stdout};
 use std::io::prelude::*;
-use super::exit;
-use super::colored::*;
+use std::process::exit;
+use colored::Colorize;
 
-use filesystem;
+use crate::filesystem;
 
-pub fn print_out(tdo: &super::tdo_core::tdo::Tdo, all: bool) {
+pub fn print_out(tdo: &tdo_core::tdo::Tdo, all: bool) {
     if tdo.get_highest_id() > 0 {
         tdo_export::render_terminal_output(tdo, all);
     } else {

@@ -2,7 +2,7 @@ use clap::{App, Arg, AppSettings, SubCommand, Shell};
 
 pub fn cli() -> App<'static, 'static> {
     App::new("tdo")
-        .version(crate_version!())
+        .version(env!("CARGO_PKG_VERSION"))
         .author("Felix Wittwer <dev@felixwittwer.de>, Felix Döring <development@felixdoering.com>")
         .about("A todo list tool for the terminal")
         .setting(AppSettings::VersionlessSubcommands)

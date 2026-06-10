@@ -1,10 +1,15 @@
-[package]
+[workspace]
+members = [".", "crates/tdo-core", "crates/tdo-export"]
+resolver = "2"
+
+
+[package] 
 name = "tdo"
 version = "2.2.0"
+edition = "2021"
 authors = ["Felix Wittwer <dev@felixwittwer.de>", "Felix Döring <development@felixdoering.com>"]
 description = "A todo list tool for the terminal."
 
-homepage = "https://tdolist.de/tdo"
 repository = "https://github.com/tdolist/tdo-rs"
 
 license = "MIT"
@@ -19,6 +24,6 @@ path = "src/main.rs"
 
 [dependencies]
 clap = {version = "2.23.1", features = ["yaml"]}
-tdo-core = "0.2"
-tdo-export = "0.2"
-colored = "1.4"
+tdo-core = { path = "crates/tdo-core" }
+tdo-export  = { path = "crates/tdo-export" }
+colored = "3.1.1"

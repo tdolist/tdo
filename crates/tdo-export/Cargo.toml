@@ -1,0 +1,22 @@
+[package]
+name = "tdo-export"
+version = "0.2.1"
+authors = ["Felix Wittwer <dev@felixwittwer.de>", "Felix Döring <development@felixdoering.com>"]
+description = "The export module for tdo"
+
+repository = "https://github.com/tdolist/tdo-export"
+documentation = "https://docs.rs/crate/tdo-export"
+
+edition = "2021"
+license = "MIT"
+keywords = ["todo", "tdo", "tdolist", "terminal"]
+readme = "README.md"
+
+include = [".gitignore", ".travis.yml", "Cargo.toml", "src/*.rs"]
+
+[dependencies]
+tdo-core = { path = "../tdo-core" }
+libc = "0.2"
+colored = "3.1.1"
+prettytable-rs = "0.10.0"
+reqwest = { version = "0.13.4", features = ["blocking", "json"] }

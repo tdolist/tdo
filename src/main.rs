@@ -1,8 +1,3 @@
-#[macro_use]
-extern crate clap;
-extern crate colored;
-extern crate tdo_core;
-extern crate tdo_export;
 
 #[macro_use]
 mod macros;

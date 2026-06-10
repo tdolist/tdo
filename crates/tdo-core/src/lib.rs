@@ -1,16 +1,11 @@
-//! This is the core for every tdo application
-#![deny(missing_docs, unsafe_code,
-        missing_copy_implementations,
-        trivial_casts, trivial_numeric_casts,
-        unused_import_braces, unused_qualifications)]
-#![warn(missing_debug_implementations)]
-#[macro_use] extern crate serde_derive;
-#[macro_use] extern crate error_chain;
-extern crate serde_json;
-extern crate json;
+//! # tdo-core
+//!
+//! Shared domain logic for the tdo ecosystem (CLI, server, daemon).
+//!
+//! **No I/O in this crate.** All persistence, networking, and terminal interaction
+//! lives in the consuming crates (`tdo-cli`, `tdo-server`, `tdo-daemon`).
 
-pub mod tdo;
-pub mod list;
-pub mod todo;
 pub mod error;
-mod legacy;
+pub mod model;
+pub mod render;
+pub mod sync;
